@@ -35,6 +35,7 @@ define([
     ojknockout_keyset_1
 ) {
     function CustomersListViewModel(params) {
+        this._initIds();
         this._initObservables();
         this._initVariables();
         this._initCustomersData();
@@ -73,17 +74,9 @@ define([
             });
         };
 
-        this.onDetailsButton = (e, context) => {
-            const {
-                router
-            } = params;
-            // console.log('add event',event);
-            router.go({
-                path: 'customers',
-                params: {
-                    id: 'createNewCustomer'
-                }
-            });
+        this.onDeleteButton = (e) => {
+          //  this.customerId(e.detail.value);
+            document.getElementById(this.deleteCustomerDialogId).open();
         };
 
         this.handleSelectedChanged = (event) => {
@@ -92,6 +85,10 @@ define([
     }
     CustomersListViewModel.prototype.getDisplayValue = function (set) {
         return JSON.stringify(Array.from(set.values()));
+    };
+
+    CustomersListViewModel.prototype._initIds = function () {
+        this.deleteCustomerDialogId = 'delete-customer-dialog-id';
     };
 
     CustomersListViewModel.prototype._initObservables = function () {
@@ -104,6 +101,12 @@ define([
 
     CustomersListViewModel.prototype._initVariables = function () {
         this.customersDataProvider = new ArrayDataProvider(this.customersData);
+        this.deleteCustomerDialog = ModuleElementUtils.createConfig({
+            name: 'dialogs/deleteCustomer',
+            params: {
+            deleteCustomerDialogId: this.deleteCustomerDialogId,
+            },
+        });
     };
 
     CustomersListViewModel.prototype._initCustomersData = async function () {

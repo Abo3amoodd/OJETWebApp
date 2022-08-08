@@ -16,6 +16,7 @@ inputs: {
 },
 headers:{
     favoritesDialogTitle:'Add To List',
+    deleteCustomerDialogTitle:'Delete Customer'
 },
 validators: {
     firstNameLengthHint: 'Value must have at least {0} characters but not more than {1}',
@@ -35,6 +36,7 @@ buttons: {
     addToList:'Add To List',
     saveToList:'Save',
     closeDialog:'Close',
+    deleteCustomer:'Delete',
 },
 // ... contents omitted
 },
