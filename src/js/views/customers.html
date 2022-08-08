@@ -1,0 +1,110 @@
+<!--
+Copyright (c) 2014, 2022, Oracle and/or its affiliates.
+Licensed under The Universal Permissive License (UPL), Version 1.0
+as shown at https://oss.oracle.com/licenses/upl/
+-->
+
+<oj-validation-group :id="[[formValidationGroupId]]"
+                     valid="[[groupValid]]">
+  <oj-form-layout id="formLayoutOptions" max-columns="3"
+                  direction="row"
+                  class="oj-formlayout-full-width"
+                  user-assistance-density="efficient">
+
+    <oj-input-text :id="[[inputFirstNameId]]"
+                   value="{{inputFirstNameValue}}"
+                   label-hint="[[inputFirstNameLabel]]"
+                   validators="[[inputFirstNameValidator]]"
+                   on-value-changed="[[onInputFirstNameValueChange]]"
+                   required>
+    </oj-input-text>
+
+    <oj-input-text :id="[[inputLastNameId]]"
+                   value="{{inputLastNameValue}}"
+                   disabled="[[isInputLastNameDisabled]]"
+                   label-hint="[[inputLastNameLabel]]">
+    </oj-input-text>
+
+    <oj-input-text :id="[[inputFullNameId]]"
+                   value="{{inputFullNameValue}}" disabled
+                   label-hint="[[inputFullNameLabel]]">
+    </oj-input-text>
+
+    <!--
+<oj-input-number :id="[[inputWeightId]]"
+label-hint="[[inputWeightLabel]]"
+messages-custom="[[inputWeightMessageCustom]]"
+on-raw-value-changed="[[onInputWeightRawValueChange]]"
+step="1"
+min="0"
+value="{{inputWeightValue}}">
+</oj-input-number>
+-->
+
+    <oj-input-date :id="[[inputBirthdayId]]"
+                   value="{{inputBirthdayValue}}"
+                   on-value-changed="[[onInputBirthdayValueChange]]"
+                   messages-custom="[[inputBirthdayMessageCustom]]"
+                   label-hint="[[inputBirthdayLabel]]"
+                   max="[[inputBirthdayMaxValue]]">
+    </oj-input-date>
+
+    <!--
+<oj-input-number :id="[[inputAgeId]]"
+label-hint="[[inputAgeLabel]]"
+value="{{inputAgeValue}}"
+disabled>
+</oj-input-number>
+-->
+
+    <oj-select-single :id="[[inputCountryId]]"
+                      label-hint="[[inputCountryLabel]]"
+                      on-value-changed="[[onInputCountryValueChange]]"
+                      data="[[inputCountryDataProvider]]"
+                      value="{{inputCountryValue}}">
+    </oj-select-single>
+
+    <oj-select-single :id="[[inputStateId]]"
+                      label-hint="[[inputStateLabel]]"
+                      data="[[inputStateDataProvider]]"
+                      disabled="[[isInputStateDisabled]]"
+                      value="{{inputStateValue}}">
+    </oj-select-single>
+
+    <oj-input-text :id="[[inputImageUrlId]]"
+                   value="{{inputImageUrlValue}}"
+                   label-hint="[[inputImageUrlLabel]]">
+    </oj-input-text>
+
+    <oj-input-text :id="[[inputEmailId]]"
+    value="{{inputEmailValue}}"
+    label-hint="[[inputEmailLabel]]">
+</oj-input-text>
+
+
+  </oj-form-layout>
+</oj-validation-group>
+
+<div
+    class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
+  <div class="oj-flex-item">
+    <oj-button on-oj-action="[[onCreateButtonClick]]"
+               chroming="callToAction"><span>
+        <oj-bind-text value="[[createButtonLabel]]">
+        </oj-bind-text>
+      </span></oj-button>
+
+    <oj-button on-oj-action="[[onResetButtonClick]]"
+               chroming="danger"><span>
+        <oj-bind-text value="[[resetButtonLabel]]">
+        </oj-bind-text>
+      </span></oj-button>
+  </div>
+</div>
+
+<!--Messages-->
+<oj-messages id="oj-messages-id" class="oj-color-invert"
+             messages="[[messageDataProvider]]"
+             display="notification"
+             position="[[messagesPosition]]"></oj-messages>
+<!--Messages end-->

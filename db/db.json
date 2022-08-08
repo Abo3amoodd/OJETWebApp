@@ -1,0 +1,159 @@
+{
+  "customers": [
+    {
+      "firstName": "Customer1231",
+      "lastName": "LastNameCustomer1231",
+      "weight": null,
+      "birthday": "1998-09-05",
+      "country": "EGY",
+      "state": "CAI",
+      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
+      "id": 1
+    },
+    {
+      "firstName": "Customer1231",
+      "lastName": "Test3",
+      "weight": null,
+      "birthday": "1998-09-05",
+      "country": "GER",
+      "state": "ULM",
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwSTvN7cBwsaA0izTzKk37pmjMrCU6pcm9Q&usqp=CAU",
+      "id": 2
+    },
+    {
+      "firstName": "Test",
+      "lastName": "Test2",
+      "weight": null,
+      "birthday": "1998-09-05",
+      "country": "EGY",
+      "state": "ALX",
+      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
+      "id": 3
+    },
+    {
+      "firstName": "Customer1231",
+      "lastName": "LastNameCustomer1231",
+      "weight": null,
+      "birthday": "1998-09-05",
+      "country": "GER",
+      "state": "BRL",
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwSTvN7cBwsaA0izTzKk37pmjMrCU6pcm9Q&usqp=CAU",
+      "id": 4
+    },
+    {
+      "firstName": "Customer1231",
+      "lastName": "Laser1231",
+      "weight": null,
+      "birthday": "1998-09-05",
+      "country": "EGY",
+      "state": "LUX",
+      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
+      "id": 5
+    },
+    {
+      "firstName": "David",
+      "lastName": "Watson",
+      "weight": null,
+      "birthday": "1998-08-09",
+      "country": "GER",
+      "state": "ULM",
+      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
+      "id": 6
+    },
+    {
+      "firstName": "Jean",
+      "lastName": "Paul",
+      "weight": null,
+      "birthday": "1998-08-10",
+      "country": "GER",
+      "state": "BRL",
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwSTvN7cBwsaA0izTzKk37pmjMrCU6pcm9Q&usqp=CAU",
+      "id": 7
+    },
+    {
+      "firstName": "Je",
+      "lastName": "Paul",
+      "birthday": "1998-08-03",
+      "country": "GER",
+      "state": "BRL",
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwSTvN7cBwsaA0izTzKk37pmjMrCU6pcm9Q&usqp=CAU",
+      "id": 8
+    },
+    {
+      "firstName": "Omar",
+      "lastName": "Magdi",
+      "birthday": "1998-08-08",
+      "country": "GER",
+      "state": "ULM",
+      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
+      "email": "omarabo3amoodd@gmail.com",
+      "id": 9
+    }
+  ],
+  "books": [
+    {
+      "id": "0",
+      "title": "Reminders of Him",
+      "author": "Colleen Hoover",
+      "type": "Paperback",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/41n9-p6-PpL._SX331_BO1,204,203,200_.jpg",
+      "rating": 5
+    },
+    {
+      "id": "1",
+      "title": "Maus I: A Survivor's Tale",
+      "author": "Art Spiegelman",
+      "type": "Paperback",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/51R45cOV8UL._SX348_BO1,204,203,200_.jpg",
+      "rating": 2
+    },
+    {
+      "id": "2",
+      "title": "I Love You to the Moon and Back",
+      "author": "Amelia Hepworth",
+      "type": "Board book",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/51p2SDOCV9L._SX482_BO1,204,203,200_.jpg",
+      "rating": 3
+    },
+    {
+      "id": "3",
+      "title": "Hardcover ",
+      "author": "James Patterson",
+      "type": "Hardcover ",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/51lRyY9R4uL._SX337_BO1,204,203,200_.jpg",
+      "rating": 2
+    },
+    {
+      "id": "4",
+      "title": "Atomic Habits",
+      "author": "James Clear",
+      "type": "Hardcover ",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/515mvgd0pXL._AC_SX184_.jpg",
+      "rating": 1
+    },
+    {
+      "id": "5",
+      "title": "The 48 Laws of Power",
+      "author": "Robert Greene",
+      "type": "Paperback ",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/41KY-NORo9L._AC_SX184_.jpg",
+      "rating": 2
+    },
+    {
+      "id": "6",
+      "title": "How to Catch a Leprechaun",
+      "author": "Adam Wallace",
+      "type": "Hardcover ",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/51jayVNubpL._AC_SX184_.jpg",
+      "rating": 4
+    },
+    {
+      "id": "7",
+      "title": "Where's Spot?",
+      "author": "Eric Hill",
+      "type": "Board book",
+      "src": "https://images-na.ssl-images-amazon.com/images/I/51o4b5AdNLL._AC_SX184_.jpg",
+      "rating": 3
+    }
+  ]
+}

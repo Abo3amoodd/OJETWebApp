@@ -1,0 +1,89 @@
+{
+    "name": "custom-book",
+    "description": "A book element that can display the book data.",
+    "displayName": "Custom Book",
+    "version": "13.0.0",
+    "jetVersion": ">=13.0.0 <14.0.0",
+    "properties": {
+
+        "bookId": {
+            "description": "The book's id.",
+            "displayName": "Id",
+            "type": "string",
+            "required": true
+        },
+        "bookTitle": {
+            "description": "The book's title.",
+            "displayName": "Title",
+            "type": "string",
+            "required": true
+        },
+        "author": {
+            "description": "The book's author.",
+            "displayName": "Author",
+            "type": "string"
+        },
+        "heartColor": {
+            "description": "The book heart color.",
+            "displayName": "Heart Color",
+            "type": "ko.observable<string>"
+        },
+        "rating": {
+            "description": "The book's rating.",
+            "displayName": "Rating",
+            "type": "number"
+        },
+        "type": {
+            "description": "The book's genre.",
+            "displayName": "Type",
+            "type": "string"
+        },
+        "src": {
+            "description": "The book's image.",
+            "displayName": "Src",
+            "type": "string",
+            "required": true
+        },
+        "clickCallback": {
+            "description": "The book's click callback to execute.",
+            "displayName": "ClickCallback",
+            "type": "function"
+        }
+    },
+    "events": {
+        "bookClick": {
+            "description": "Triggered when a book is clicked and contains the value of the clicked card.",
+            "bubbles": true,
+            "detail": {
+                "value": {
+                    "description": "The value of the book.",
+                    "type": "string"
+                }
+            }
+        },
+        "addedToList": {
+            "description": "Triggered when a user adds a book to the favorites list",
+            "bubbles": true,
+            "detail": {
+                "value": {
+                    "description": "The id of the list.",
+                    "type": "string/number"
+                }
+            }
+        }
+    },
+    "methods": {
+        "changeHeartColor": {
+            "description": "Changes the color of the heart to the value that is given",
+            "params": [{
+                "name": "value",
+                "description": "The heart color value to set",
+                "type": "string"
+            }]
+        },
+        "getHeartColor": {
+            "internalName": "_getHeartColor",
+            "description": "Returns the heart color"
+        }
+    }
+}

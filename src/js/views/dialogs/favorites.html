@@ -1,0 +1,21 @@
+<oj-dialog  :id="[[favoritesDialogId]]" 
+            :dialog-title="[[favoritesDialogTitle]]"
+            on-oj-before-close="[[beforeFavoritesDialogClose]]"
+            initial-visibility="hide">
+    <div slot="body">Are you sure you want to add this to your list?
+        <oj-select-single
+        value="{{inputListValue}}"
+        label-hint="[[inputListLabel]]"
+        data="[[inputListDataProvider]]">
+        </oj-select-single>
+    </div>
+    <div slot="footer">
+        <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal"  on-oj-action="[[handleCloseDialog]]" display='all'>
+            <span><oj-bind-text value="[[closeDialogLabel]]"></oj-bind-text></span>
+        </oj-button>
+        <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal" chroming="callToAction" on-oj-action="[[handleSaveToList]]" display='all'>
+            <span><oj-bind-text value="[[saveToListLabel]]"></oj-bind-text></span>
+        </oj-button>
+
+    </div>
+</oj-dialog>

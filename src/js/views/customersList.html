@@ -1,0 +1,77 @@
+
+
+
+<div    class="oj-sm-padding-4x-bottom oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-sm-width-full">
+    <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"   chroming="callToAction" on-oj-action="[[onAddButton]]">
+        <span slot="startIcon" class="oj-ux-ico-contact-plus"></span>
+        <span><oj-bind-text>Create New Customer</oj-bind-text></oj-bind-text></span>
+    </oj-button>
+</div>
+<oj-list-view
+    id="listview"
+    aria-label="simple list"
+    data="[[customersDataProvider]]"
+    selected="{{selectedItems}}"
+    selection-mode="single"
+    selection-required="[[selectedSelectionRequired]]"
+    on-selected-changed="[[handleSelectedChanged]]"
+    first-selected-item="{{firstSelectedItem}}"
+    gridlines.item="visible">
+        <template slot="itemTemplate" data-oj-as="item">
+            <oj-list-item-layout>
+                <span class="oj-typography-body-md oj-text-color-primary oj-typography-bold">
+                    <oj-bind-text value="[[item.data.firstName]]"></oj-bind-text>
+                    <oj-bind-text value="[[item.data.lastName]]"></oj-bind-text>
+                </span>
+                <oj-avatar slot="leading" size="md" src="[[item.data.avatar]]"></oj-avatar>
+                <span slot="secondary" class="oj-typography-body-md oj-text-color-secondary">
+                    <oj-bind-text value="[[item.data.email]]"></oj-bind-text>
+                </span>
+                <div    class="oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-divider  oj-sm-width-full">
+                    <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal "  chroming="solid" on-oj-action="[[onEditButton]]">
+                        <span slot="startIcon"  class="oj-ux-ico-contact-edit"></span>
+                        <span><oj-bind-text>Edit</oj-bind-text></oj-bind-text></span>
+                    </oj-button>
+                    <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal"  chroming="danger" display="icons" on-oj-action="[[onEditButton]]">
+                        <span slot="startIcon"  class="oj-ux-ico-delete-all"></span>
+                        <span><oj-bind-text>Delete Customer</oj-bind-text></oj-bind-text></span>
+                    </oj-button>
+                </div>
+            </oj-list-item-layout>
+        </template>
+</oj-list-view>
+
+
+
+
+
+
+
+
+
+<!--    Displays data on the page 
+
+<div class="oj-typography-body-sm oj-text-color-secondary">
+    <br />
+    <label for="curr-selection">Current Selection:&nbsp;</label>
+    <span id="curr-selection-value">
+    <oj-bind-text value="[[getDisplayValue(selectedItems())]]"></oj-bind-text>
+    </span>
+    <br />
+    <br />
+    <label for="selected-item-ids">IDs from Selected Change Event:&nbsp;</label>
+    <span id="selected-item-ids-value">
+    <oj-bind-text value="[[ko.toJSON(selectedIds)]]"></oj-bind-text>
+    </span>
+    <br />
+    <br />
+    <label for="first-selected-item-id">Data for First Selected Item:&nbsp;</label>
+    <span id="first-selected-item-id-value">
+    <oj-bind-text value="[[ko.toJSON(firstSelectedItem)]]"></oj-bind-text>
+    </span>
+</div>
+
+
+-->
+
+
