@@ -74,7 +74,7 @@ define([
             });
         };
 
-        this.onDeleteButton = (e) => {
+        this.onDeleteButton = (context) => {
           //  this.customerId(e.detail.value);
             document.getElementById(this.deleteCustomerDialogId).open();
         };

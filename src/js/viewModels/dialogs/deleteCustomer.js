@@ -29,9 +29,9 @@
 
             this._initLabels();
 
-            this._initObservables(context);
+            this._initObservables();
 
-            this._initVariables(context);
+            this._initVariables();
 
             this.handleDeleteCustomer=this._handleDeleteCustomer.bind(this);
 
@@ -57,13 +57,13 @@
 
         };
 
-        DeleteCustomerDialogViewModel.prototype._initObservables=function(context) {
+        DeleteCustomerDialogViewModel.prototype._initObservables=function() {
 
           //  this.inputListValue=ko.observable(null);
           //  this.listData=context.listData;
         };
 
-        DeleteCustomerDialogViewModel.prototype._initVariables=function(context) {
+        DeleteCustomerDialogViewModel.prototype._initVariables=function() {
            // this.inputListDataProvider= new ArrayDataProvider(this.listData,{
            //     keyAttributes:'value',
            // });

@@ -82,7 +82,7 @@ define([
         return book;
       });
       this.booksData(bookSrc);
-      console.log(this.booksData());
+    //  console.log(this.booksData());
 
       this.isLoading(false);
     }
