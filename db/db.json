@@ -5,36 +5,6 @@
       "lastName": "LastNameCustomer1231",
       "weight": null,
       "birthday": "1998-09-05",
-      "country": "EGY",
-      "state": "CAI",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "id": 1
-    },
-    {
-      "firstName": "Customer1231",
-      "lastName": "Test3",
-      "weight": null,
-      "birthday": "1998-09-05",
-      "country": "GER",
-      "state": "ULM",
-      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwSTvN7cBwsaA0izTzKk37pmjMrCU6pcm9Q&usqp=CAU",
-      "id": 2
-    },
-    {
-      "firstName": "Test",
-      "lastName": "Test2",
-      "weight": null,
-      "birthday": "1998-09-05",
-      "country": "EGY",
-      "state": "ALX",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "id": 3
-    },
-    {
-      "firstName": "Customer1231",
-      "lastName": "LastNameCustomer1231",
-      "weight": null,
-      "birthday": "1998-09-05",
       "country": "GER",
       "state": "BRL",
       "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwSTvN7cBwsaA0izTzKk37pmjMrCU6pcm9Q&usqp=CAU",
@@ -88,63 +58,6 @@
       "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
       "email": "omarabo3amoodd@gmail.com",
       "id": 9
-    },
-    {
-      "firstName": "David",
-      "lastName": "Watson",
-      "birthday": "1998-08-02",
-      "country": "GER",
-      "state": "ULM",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "id": 11
-    },
-    {
-      "firstName": "David",
-      "lastName": "Watson",
-      "birthday": "1998-08-05",
-      "country": "GER",
-      "state": "ULM",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "id": 12
-    },
-    {
-      "firstName": "David",
-      "lastName": "Watson",
-      "birthday": "1998-08-05",
-      "country": "GER",
-      "state": "ULM",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "id": 13
-    },
-    {
-      "firstName": "Omar",
-      "lastName": "Amoud",
-      "birthday": "2004-08-04",
-      "country": "GER",
-      "state": "ULM",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "email": "omarabo3amoodd@gmail.com",
-      "id": 14
-    },
-    {
-      "firstName": "Omar",
-      "lastName": "Amoud",
-      "birthday": "2004-08-01",
-      "country": "GER",
-      "state": "ULM",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "email": "omarabo3amoodd@gmail.com",
-      "id": 15
-    },
-    {
-      "firstName": "Jack",
-      "lastName": "Cortair",
-      "birthday": "2004-07-04",
-      "country": "GER",
-      "state": "ULM",
-      "avatar": "https://www.amongusavatarcreator.com/assets/img/main/icon.png",
-      "email": "jack@jack.com",
-      "id": 16
     }
   ],
   "books": [

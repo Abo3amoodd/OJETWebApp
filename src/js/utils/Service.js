@@ -11,9 +11,16 @@ define(['text!../../json/config.json'], function (configFile) {
        * @description Generates a unique ID
        * @returns a unique ID based on a internal counter
        */
-            buildEndPointUrl(endpointProperty) {
+            buildEndPointUrl(endpointProperty,id) {
             const url= `${config.isSecure ? 'https' :'http'}://${config.host}:${config.port}/${config.endpoints[endpointProperty]}`;
-            return url;
+            if(id==null){
+              return url;
+            }
+            else{
+              return url+`/${id}`;
+            }
+          
+            
             }
           /**
          * @function fetchData
@@ -25,10 +32,6 @@ define(['text!../../json/config.json'], function (configFile) {
          */
           async fetchData(endpointProperty,method,bodyData) {
           let fetchOptionsObject=null;
-
-
-
-
           if(method==='POST'){
             fetchOptionsObject={
               headers:  {  
@@ -73,11 +76,9 @@ define(['text!../../json/config.json'], function (configFile) {
           headers:  {
             'Content-Type':'application/json',
           }, 
-          method: 'DELETE',
-          id: bodyData,
+          method: 'DELETE'
         };
-      
-      const api_url=this.buildEndPointUrl(endpointProperty);
+      const api_url=this.buildEndPointUrl(endpointProperty,bodyData);
       let dataFromService;
       try {
         const response=await fetch(api_url,fetchOptionsObject);
@@ -88,7 +89,7 @@ define(['text!../../json/config.json'], function (configFile) {
         throw Error('Something went wrong');
       }
 
-    //  return dataFromService;
+      return dataFromService;
     }
 
 

@@ -27,9 +27,7 @@
 
         const _t=Translations.getTranslatedString;
         function DeleteCustomerDialogViewModel(context) {
-
             this._initIds(context);
-
             this._initLabels();
 
             this._initObservables(context);
@@ -46,6 +44,8 @@
         DeleteCustomerDialogViewModel.prototype._initIds=function(context) {
             
             this.deleteCustomerDialogId=context.deleteCustomerDialogId;
+            this.deletedCustomerId=context.deletedCustomerId;
+            console.log(this.deletedCustomerId);
 
         };
 
@@ -78,7 +78,7 @@
         DeleteCustomerDialogViewModel.prototype._handleDeleteCustomer= async function(context) {
             let dataFromService;
             try {
-            dataFromService = await CustomersServices.deleteCustomer();
+            dataFromService = await CustomersServices.deleteCustomer(this.deletedCustomerId);
             } catch (error) {
             this.messageDataProvider(
             new ArrayDataProvider([{

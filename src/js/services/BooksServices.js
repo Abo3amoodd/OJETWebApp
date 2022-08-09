@@ -9,7 +9,7 @@ define(['utils/Service'], function (ServiceUtils) {
      * @returns The existing instance
      */
     BooksServices.prototype.fetchBooks=async function(){
-      return await ServiceUtils.fetchData('books');
+      return await ServiceUtils.fetchData('books','GET');
     };
 
 

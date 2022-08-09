@@ -15,8 +15,8 @@ define(['utils/Service'], function (ServiceUtils) {
     CustomersServices.prototype.fetchCustomers=async function(){
       return await ServiceUtils.fetchData('customers','GET');
     };
-    CustomersServices.prototype.deleteCustomer=async function(customer){
-      return await ServiceUtils.fetchData('customers','DELETE',customer.id);
+    CustomersServices.prototype.deleteCustomer=async function(customerID){
+      return await ServiceUtils.fetchData('customers','DELETE',customerID);
     };
 
   return new CustomersServices;

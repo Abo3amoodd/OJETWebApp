@@ -55,9 +55,7 @@ define([
         };
 
         this.onEditButton = (e, context) => {
-            const {
-                router
-            } = params;
+            const {router} = params;
             // var detailsID=context.data.id;
             router.go({
                 path: 'customers',
@@ -76,12 +74,13 @@ define([
         };
 
         this.onDeleteButton = (e,context) => {
-            this.customerId(context.data.id);
+         //  console.log(context);
             document.getElementById(this.deleteCustomerDialogId).open();
         };
 
         this.handleSelectedChanged = (event) => {
-            this.selectedIds(this.getDisplayValue(event.detail.value)); // show selected list item elements' ids
+            this.selectedIds(this.getDisplayValue(event.detail.value));
+            this.deletedCustomerId(this.firstSelectedItem().data.id());
         };
     }
     CustomersListViewModel.prototype.getDisplayValue = function (set) {
@@ -98,6 +97,7 @@ define([
         this.selectedSelectionRequired = ko.observable(false);
         this.firstSelectedItem = ko.observable();
         this.selectedIds = ko.observable();
+        this.deletedCustomerId = ko.observable(null);
         this.customerId = ko.observable(null);
 
     };
@@ -108,10 +108,11 @@ define([
             name: 'dialogs/deleteCustomer',
             params: {
             deleteCustomerDialogId: this.deleteCustomerDialogId,
+            deletedCustomerId:this.deletedCustomerId,
             },
         });
+        
     };
-
     CustomersListViewModel.prototype._initCustomersData = async function () {
         let dataFromService;
         try {
@@ -122,12 +123,11 @@ define([
 
         if (dataFromService) {
             const customerSrc = dataFromService.map((customer) => {
-                customer.id = `client-${customer.id}`;
+                //customer.id = `client-${customer.id}`;
                 customer.id = ko.observable(customer.id);
                 return customer;
             });
             this.customersData(customerSrc);
-            //  console.log(this.customersData());
         }
     };
 
