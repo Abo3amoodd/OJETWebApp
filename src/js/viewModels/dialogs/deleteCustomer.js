@@ -11,6 +11,8 @@
     define(['ojs/ojtranslation',
     'knockout',
     'ojs/ojarraydataprovider',
+    'utils/Core',
+    'services/CustomersServices',
     'ojs/ojavatar',
     'ojs/ojgauge',
     'ojs/ojdialog',
@@ -18,20 +20,21 @@
     ], 
     function(Translations,
             ko,
-            ArrayDataProvider) 
+            ArrayDataProvider,
+            CoreUtils, 
+            CustomersServices)
     {
 
         const _t=Translations.getTranslatedString;
-
         function DeleteCustomerDialogViewModel(context) {
 
             this._initIds(context);
 
             this._initLabels();
 
-            this._initObservables();
+            this._initObservables(context);
 
-            this._initVariables();
+            this._initVariables(context);
 
             this.handleDeleteCustomer=this._handleDeleteCustomer.bind(this);
 
@@ -57,13 +60,14 @@
 
         };
 
-        DeleteCustomerDialogViewModel.prototype._initObservables=function() {
+        DeleteCustomerDialogViewModel.prototype._initObservables=function(context) {
 
+            this.messageDataProvider = ko.observable(new ArrayDataProvider([]));
           //  this.inputListValue=ko.observable(null);
           //  this.listData=context.listData;
         };
 
-        DeleteCustomerDialogViewModel.prototype._initVariables=function() {
+        DeleteCustomerDialogViewModel.prototype._initVariables=function(context) {
            // this.inputListDataProvider= new ArrayDataProvider(this.listData,{
            //     keyAttributes:'value',
            // });
@@ -71,8 +75,20 @@
 
         };
 
-        DeleteCustomerDialogViewModel.prototype._handleDeleteCustomer=function() {
-
+        DeleteCustomerDialogViewModel.prototype._handleDeleteCustomer= async function(context) {
+            let dataFromService;
+            try {
+            dataFromService = await CustomersServices.deleteCustomer();
+            } catch (error) {
+            this.messageDataProvider(
+            new ArrayDataProvider([{
+                severity: 'error',
+                detail: error.message,
+                timestamp: new Date().toISOString(),
+                autoTimeout: CoreUtils.getAutoTimeout(),
+                }, ])
+            );
+            }
             document.getElementById(this.deleteCustomerDialogId).close();
 
         };

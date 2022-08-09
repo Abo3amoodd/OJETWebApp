@@ -22,6 +22,7 @@ define([
     'ojs/ojavatar',
     'ojs/ojbutton',
     'ojs/ojlistview',
+    'ojs/ojdialog',
     'ojs/ojlistitemlayout',
 ], function (
     Translations,
@@ -74,8 +75,8 @@ define([
             });
         };
 
-        this.onDeleteButton = (context) => {
-          //  this.customerId(e.detail.value);
+        this.onDeleteButton = (e,context) => {
+            this.customerId(context.data.id);
             document.getElementById(this.deleteCustomerDialogId).open();
         };
 
@@ -97,6 +98,8 @@ define([
         this.selectedSelectionRequired = ko.observable(false);
         this.firstSelectedItem = ko.observable();
         this.selectedIds = ko.observable();
+        this.customerId = ko.observable(null);
+
     };
 
     CustomersListViewModel.prototype._initVariables = function () {

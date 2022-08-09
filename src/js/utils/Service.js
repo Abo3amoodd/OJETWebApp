@@ -6,7 +6,6 @@ define(['text!../../json/config.json'], function (configFile) {
          * @returns 
          */
         constructor() {}
-
         /**
        * @function buildEndPointUrl
        * @description Generates a unique ID
@@ -15,9 +14,7 @@ define(['text!../../json/config.json'], function (configFile) {
             buildEndPointUrl(endpointProperty) {
             const url= `${config.isSecure ? 'https' :'http'}://${config.host}:${config.port}/${config.endpoints[endpointProperty]}`;
             return url;
-          }
-
-
+            }
           /**
          * @function fetchData
          * @description executes API according to method used
@@ -26,8 +23,12 @@ define(['text!../../json/config.json'], function (configFile) {
          * @param {}bodyData
          * @returns (Promise<Any>)
          */
-        async fetchData(endpointProperty,method,bodyData) {
+          async fetchData(endpointProperty,method,bodyData) {
           let fetchOptionsObject=null;
+
+
+
+
           if(method==='POST'){
             fetchOptionsObject={
               headers:  {  
@@ -36,11 +37,9 @@ define(['text!../../json/config.json'], function (configFile) {
               method: 'POST',
               body: JSON.stringify(bodyData),
             };
-          }
-
+          
           const api_url=this.buildEndPointUrl(endpointProperty);
           let dataFromService;
-
           try {
             const response=await fetch(api_url,fetchOptionsObject);
             if(!response.ok) throw Error('Something went wrong');
@@ -52,7 +51,51 @@ define(['text!../../json/config.json'], function (configFile) {
   
           return dataFromService;
         }
+
+        if(method==='GET'){
+        const api_url=this.buildEndPointUrl(endpointProperty);
+        let dataFromService;
+        try {
+          const response=await fetch(api_url,fetchOptionsObject);
+          if(!response.ok) throw Error('Something went wrong');
+          dataFromService=await response.json();
+        } 
+        catch (error) {
+          throw Error('Something went wrong');
+        }
+
+        return dataFromService;
+      }
+
+
+      if(method==='DELETE'){
+        fetchOptionsObject={
+          headers:  {
+            'Content-Type':'application/json',
+          }, 
+          method: 'DELETE',
+          id: bodyData,
+        };
+      
+      const api_url=this.buildEndPointUrl(endpointProperty);
+      let dataFromService;
+      try {
+        const response=await fetch(api_url,fetchOptionsObject);
+        if(!response.ok) throw Error('Something went wrong');
+        dataFromService=await response.json();
+      } 
+      catch (error) {
+        throw Error('Something went wrong');
+      }
+
+    //  return dataFromService;
+    }
+
+
+
+
+      }
+      
   }
   return new ServiceUtils();
-}
-);
+});

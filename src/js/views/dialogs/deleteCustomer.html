@@ -4,11 +4,11 @@
             initial-visibility="hide">
     <div slot="body">Are you sure you want to delete this customer?</div>
     <div slot="footer">
+        <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal" chroming="callToAction" on-oj-action="[[handleDeleteCustomer]]" display='all'>
+            <span><oj-bind-text value="[[deleteCustomerLabel]]"></oj-bind-text></span>
+        </oj-button>
         <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal"  on-oj-action="[[handleCloseDialog]]" display='all'>
             <span><oj-bind-text value="[[closeDialogLabel]]"></oj-bind-text></span>
-        </oj-button>
-        <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal" chroming="callToAction" on-oj-action="[[handleCloseDialog]]" display='all'>
-            <span><oj-bind-text value="[[deleteCustomerLabel]]"></oj-bind-text></span>
         </oj-button>
 
     </div>

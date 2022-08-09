@@ -13,7 +13,10 @@ define(['utils/Service'], function (ServiceUtils) {
     };
 
     CustomersServices.prototype.fetchCustomers=async function(){
-      return await ServiceUtils.fetchData('customers');
+      return await ServiceUtils.fetchData('customers','GET');
+    };
+    CustomersServices.prototype.deleteCustomer=async function(customer){
+      return await ServiceUtils.fetchData('customers','DELETE',customer.id);
     };
 
   return new CustomersServices;
