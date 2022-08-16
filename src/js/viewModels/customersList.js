@@ -39,16 +39,17 @@ define([
     ojknockout_keyset_1,
     CoreUtils
 ) {
-    const _t=Translations.getTranslatedString;
+    const _t = Translations.getTranslatedString;
+
     function CustomersListViewModel(params) {
         this._initIds();
         this._initLabels();
         this._initObservables();
         this._initCustomersData();
         this._initVariables();
-        this.handleCloseDialog=this._handleCloseDialog.bind(this);
-        this.beforeDeleteCustomerDialogClose=this._beforeDeleteCustomerDialogClose.bind(this);
-        
+        this.handleCloseDialog = this._handleCloseDialog.bind(this);
+        this.beforeDeleteCustomerDialogClose = this._beforeDeleteCustomerDialogClose.bind(this);
+
         this.onAddButton = (e) => {
             const {
                 router
@@ -69,7 +70,9 @@ define([
 
         };
         this.onEditButton = (e, context) => {
-            const {router} = params;
+            const {
+                router
+            } = params;
             // var detailsID=context.data.id;
             router.go({
                 path: 'customers',
@@ -87,49 +90,49 @@ define([
             });
         };
 
-        this.onDeleteButton = async (event,context) => {
-        document.getElementById(this.deleteCustomerDialogId).open();
-        };  
-        this.onConfirmDeleteButton = async (event,context) => {
-                document.getElementById(this.deleteCustomerDialogId).close();
-                let dataFromService;
-                try {
+        this.onDeleteButton = async (event, context) => {
+            document.getElementById(this.deleteCustomerDialogId).open();
+        };
+        this.onConfirmDeleteButton = async (event, context) => {
+            document.getElementById(this.deleteCustomerDialogId).close();
+            let dataFromService;
+            try {
                 dataFromService = await CustomersServices.deleteCustomer(this.deletedCustomerId());
-                } catch (error) {
+            } catch (error) {
                 this.messageDataProvider(
-                new ArrayDataProvider([{
-                    severity: 'error',
-                    detail: error.message,
-                    timestamp: new Date().toISOString(),
-                    autoTimeout: CoreUtils.getAutoTimeout(),
+                    new ArrayDataProvider([{
+                        severity: 'error',
+                        detail: error.message,
+                        timestamp: new Date().toISOString(),
+                        autoTimeout: CoreUtils.getAutoTimeout(),
                     }, ])
                 );
+            }
+            const {
+                router
+            } = params;
+            // console.log('add event',event);
+            router.go({
+                path: 'customersList',
+                params: {
+                    id: 'List'
                 }
-                const {
-                    router
-                } = params;
-                // console.log('add event',event);
-                router.go({
-                    path: 'customersList',
-                    params: {
-                        id:'List'
-                    }
-                });
-            };
+            });
+        };
 
         this.handleSelectedChanged = (event) => {
-            
+
             this.selectedIds(this.getDisplayValue(event.detail.value));
             //console.log(this.firstSelectedItem().data);
             try {
-                this.deletedCustomerId(this.firstSelectedItem().data.id());      
+                this.deletedCustomerId(this.firstSelectedItem().data.id());
             } catch (error) {
-               // console.log(error);
+                // console.log(error);
             }
-            
+
         };
 
-        this.handleValueAction = async(event) => {
+        this.handleValueAction = async (event) => {
             const detail = event.detail;
             const eventTime = this._getCurrentTime();
             this.searchTerm(detail.value);
@@ -142,15 +145,15 @@ define([
             } catch (error) {
                 console.log(error);
             }
-    
+
             if (dataFromService) {
                 const customerSrc = dataFromService.map((customer) => {
                     //customer.id = `client-${customer.id}`;
                     customer.id = ko.observable(customer.id);
                     return customer;
                 });
-            this.customersData(customerSrc);
-            }       
+                this.customersData(customerSrc);
+            }
         };
         this._trimItemContext = (itemContext) => {
             let searchItemContext = null;
@@ -176,13 +179,13 @@ define([
 
 
 
-    CustomersListViewModel.prototype._initLabels=function() {
+    CustomersListViewModel.prototype._initLabels = function () {
 
-        this.deleteCustomerDialogTitle=_t('headers.deleteCustomerDialogTitle');
+        this.deleteCustomerDialogTitle = _t('headers.deleteCustomerDialogTitle');
 
-        this.deleteCustomerLabel=_t('buttons.deleteCustomer');
+        this.deleteCustomerLabel = _t('buttons.deleteCustomer');
 
-        this.closeDialogLabel=_t('buttons.closeDialog');
+        this.closeDialogLabel = _t('buttons.closeDialog');
     };
 
 
@@ -197,7 +200,7 @@ define([
 
     CustomersListViewModel.prototype._initObservables = function () {
         this.customersData = ko.observableArray([]);
-        this.searchedCustomersData=ko.observableArray([]);
+        this.searchedCustomersData = ko.observableArray([]);
         this.selectedItems = new ojknockout_keyset_1.ObservableKeySet();
         this.selectedSelectionRequired = ko.observable(false);
         this.firstSelectedItem = ko.observable();
@@ -215,21 +218,25 @@ define([
         this.previousSearchTerm = ko.observable();
         this.searchTimeStamp = ko.observable();
 
-        this.pageNumber=ko.observable(1);
-        this.isOnFirstPage=ko.observable(this.pageNumber()==1);
-        this.isOnLastPage=ko.observable(this.pageNumber()==20);
+        this.pageNumber = ko.observable(1);
+        this.isOnFirstPage = ko.observable(this.pageNumber() == 1);
+        this.isOnLastPage = ko.observable(this.pageNumber() == 20);
     };
 
     CustomersListViewModel.prototype._initVariables = function () {
-        this.customersDataProvider = new ArrayDataProvider(this.customersData,{keyAttributes: "id"});
-        this.searchedCustomersDataProvider = new ArrayDataProvider(this.searchedCustomersData,{keyAttributes: "id"});      
-    
+        this.customersDataProvider = new ArrayDataProvider(this.customersData, {
+            keyAttributes: "id"
+        });
+        this.searchedCustomersDataProvider = new ArrayDataProvider(this.searchedCustomersData, {
+            keyAttributes: "id"
+        });
+
     };
 
 
-    CustomersListViewModel.prototype._beforeDeleteCustomerDialogClose=function() {
+    CustomersListViewModel.prototype._beforeDeleteCustomerDialogClose = function () {
         //  this.inputListValue(null);
-        };
+    };
     CustomersListViewModel.prototype._initCustomersData = async function () {
         let dataFromService;
         try {
@@ -248,7 +255,7 @@ define([
         }
     };
 
-    CustomersListViewModel.prototype._handleCloseDialog=function() {
+    CustomersListViewModel.prototype._handleCloseDialog = function () {
         document.getElementById(this.deleteCustomerDialogId).close();
 
     };
