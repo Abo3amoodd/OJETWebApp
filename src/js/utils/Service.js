@@ -11,16 +11,23 @@ define(['text!../../json/config.json'], function (configFile) {
        * @description Generates a unique ID
        * @returns a unique ID based on a internal counter
        */
-            buildEndPointUrl(endpointProperty,id) {
+            buildEndPointUrl(endpointProperty,id,firstName,pageCount) {
+
             const url= `${config.isSecure ? 'https' :'http'}://${config.host}:${config.port}/${config.endpoints[endpointProperty]}`;
-            if(id==null){
-              return url;
+            
+            if(firstName==null){
+              if(id==null){
+                return url+`?_start=${pageCount}&_limit=10`;
+              }
+              else{
+                return url+`/${id}`;
+              }
             }
             else{
-              return url+`/${id}`;
+              return url+`/?start=0&_limit=10&label_like=${firstName}`;
             }
-          
             
+
             }
           /**
          * @function fetchData
@@ -56,6 +63,27 @@ define(['text!../../json/config.json'], function (configFile) {
         }
 
         if(method==='GET'){
+        
+        if(bodyData!=null){
+          const api_url=this.buildEndPointUrl(endpointProperty,null,bodyData);
+          let dataFromService;
+          try {
+            const response=await fetch(api_url,fetchOptionsObject);
+            if(!response.ok) throw Error('Something went wrong');
+            dataFromService=await response.json();
+          } 
+          catch (error) {
+            throw Error('Something went wrong');
+          }
+          
+          
+          return dataFromService;
+
+        }
+        else{
+
+        
+
         const api_url=this.buildEndPointUrl(endpointProperty);
         let dataFromService;
         try {
@@ -66,8 +94,10 @@ define(['text!../../json/config.json'], function (configFile) {
         catch (error) {
           throw Error('Something went wrong');
         }
-
+        
+        
         return dataFromService;
+        }
       }
 
 
@@ -78,7 +108,7 @@ define(['text!../../json/config.json'], function (configFile) {
           }, 
           method: 'DELETE'
         };
-      const api_url=this.buildEndPointUrl(endpointProperty,bodyData);
+      const api_url=this.buildEndPointUrl(endpointProperty,bodyData,null);
       let dataFromService;
       try {
         const response=await fetch(api_url,fetchOptionsObject);

@@ -12,8 +12,14 @@ define(['utils/Service'], function (ServiceUtils) {
       return await ServiceUtils.fetchData('customers','POST',customer);
     };
 
-    CustomersServices.prototype.fetchCustomers=async function(){
-      return await ServiceUtils.fetchData('customers','GET');
+    CustomersServices.prototype.fetchCustomers=async function(customerName){
+      if(customerName==null){
+        return await ServiceUtils.fetchData('customers','GET');
+      }
+      else{
+        return await ServiceUtils.fetchData('customers','GET',customerName);
+      }
+
     };
     CustomersServices.prototype.deleteCustomer=async function(customerID){
       return await ServiceUtils.fetchData('customers','DELETE',customerID);

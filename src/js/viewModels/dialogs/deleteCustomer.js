@@ -29,15 +29,14 @@
         function DeleteCustomerDialogViewModel(context) {
             this._initIds(context);
             this._initLabels();
-
             this._initObservables(context);
-
             this._initVariables(context);
 
+
+
+
             this.handleDeleteCustomer=this._handleDeleteCustomer.bind(this);
-
             this.handleCloseDialog=this._handleCloseDialog.bind(this);
-
             this.beforeDeleteCustomerDialogClose=this._beforeDeleteCustomerDialogClose.bind(this);
 
         }
@@ -46,7 +45,6 @@
             this.deleteCustomerDialogId=context.deleteCustomerDialogId;
             this.deletedCustomerId=context.deletedCustomerId;
             console.log(this.deletedCustomerId);
-
         };
 
         DeleteCustomerDialogViewModel.prototype._initLabels=function() {
@@ -63,6 +61,7 @@
         DeleteCustomerDialogViewModel.prototype._initObservables=function(context) {
 
             this.messageDataProvider = ko.observable(new ArrayDataProvider([]));
+           // this.deletedCustomerId=ko.observable(context.deletedCustomerId);
           //  this.inputListValue=ko.observable(null);
           //  this.listData=context.listData;
         };
@@ -71,11 +70,11 @@
            // this.inputListDataProvider= new ArrayDataProvider(this.listData,{
            //     keyAttributes:'value',
            // });
-           // this.changeColorCallback=context.changeColorCallback;
-
         };
 
         DeleteCustomerDialogViewModel.prototype._handleDeleteCustomer= async function(context) {
+            console.log("test");
+            console.log(this.deletedCustomerId);
             let dataFromService;
             try {
             dataFromService = await CustomersServices.deleteCustomer(this.deletedCustomerId);
