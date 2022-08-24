@@ -12,14 +12,21 @@ define(['utils/Service'], function (ServiceUtils) {
     return await ServiceUtils.fetchData('customers', 'POST', customer);
   };
 
-  CustomersServices.prototype.fetchCustomers = async function (customerName) {
+  CustomersServices.prototype.fetchCustomers = async function (customerName,pageNumber) {
     if (customerName == null) {
-      return await ServiceUtils.fetchData('customers', 'GET');
+      if(pageNumber==null){
+        return await ServiceUtils.fetchData('customers', 'GET',null,pageNumber);
+      }
+      else{
+        return await ServiceUtils.fetchData('customers', 'GET',null, pageNumber);
+
+      }
     } else {
-      return await ServiceUtils.fetchData('customers', 'GET', customerName);
+        return await ServiceUtils.fetchData('customers', 'GET', customerName, pageNumber);
     }
 
   };
+
   CustomersServices.prototype.deleteCustomer = async function (customerID) {
     return await ServiceUtils.fetchData('customers', 'DELETE', customerID);
   };

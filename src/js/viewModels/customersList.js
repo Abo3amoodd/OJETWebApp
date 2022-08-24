@@ -19,7 +19,9 @@ define([
     'utils/Service',
     'ojs/ojknockout-keyset',
     'utils/Core',
+    'ojs/ojcontext',
     'ojs/ojprogress-circle',
+    'ojs/ojprogress-bar',
     'ojs/ojavatar',
     'ojs/ojbutton',
     'ojs/ojlistview',
@@ -37,18 +39,53 @@ define([
     accUtils,
     ServiceUtils,
     ojknockout_keyset_1,
-    CoreUtils
+    CoreUtils,
+    Context
 ) {
     const _t = Translations.getTranslatedString;
+    // var currentPageNumber=1;
 
     function CustomersListViewModel(params) {
         this._initIds();
         this._initLabels();
         this._initObservables();
-        this._initCustomersData();
+     // this._initCustomersData();
+        this._showCustomers();
+        this._initCustomersSuggestions();
         this._initVariables();
         this.handleCloseDialog = this._handleCloseDialog.bind(this);
         this.beforeDeleteCustomerDialogClose = this._beforeDeleteCustomerDialogClose.bind(this);
+
+
+
+/*         this.showEmployees = () => {
+           // const buttonElement = event.target;
+           // buttonElement.disabled = true;
+            this.employees([]);
+            const busyContext = Context.getPageContext().getBusyContext();
+            const resolveBusyState = busyContext.addBusyState({
+                description: "Fetching employees",
+            });
+            this.getEmployees().then( ()=> {
+                this._initCustomersData();
+            
+              //  buttonElement.disabled = false;
+                resolveBusyState();
+            });
+        };
+
+        this.getEmployees = () => {
+            return new Promise(function (resolve, reject) {
+                window.setTimeout(function(){
+                    resolve();
+                }
+                    //resolve();
+                , 1000);
+            });
+        }; */
+
+
+
 
         this.onAddButton = (e) => {
             const {
@@ -63,10 +100,65 @@ define([
             });
         };
 
-        this.onPreviousButton = (e) => {
+        this.onPreviousButton = async (e) => {
 
+            this.currentPageNumber(this.currentPageNumber() - 1);
+            //console.log(this.isOnFirstPage());
+            if (this.currentPageNumber() == 1) {
+                this.isOnFirstPage(true);
+            } else {
+                this.isOnFirstPage(false);
+            }
+            if (this.currentPageNumber() >= this.pagesNumber()) {
+                this.isOnLastPage(true);
+            } else {
+                this.isOnLastPage(false);
+            }
+
+            let dataFromService;
+            try {
+                dataFromService = await CustomersServices.fetchCustomers(null, this.currentPageNumber());
+            } catch (error) {
+                //console.log(error);
+            }
+
+            if (dataFromService) {
+                const customerSrc = dataFromService.map((customer) => {
+                    //customer.id = `client-${customer.id}`;
+                    customer.id = ko.observable(customer.id);
+                    return customer;
+                });
+                this.customersData(customerSrc);
+            }
         };
-        this.onNextButton = (e) => {
+        this.onNextButton = async (e) => {
+            this.currentPageNumber(this.currentPageNumber() + 1);
+            //  console.log(this.isOnFirstPage());
+            if (this.currentPageNumber() == 1) {
+                this.isOnFirstPage(true);
+            } else {
+                this.isOnFirstPage(false);
+            }
+            if (this.currentPageNumber() == 22) {
+                this.isOnLastPage(true);
+            } else {
+                this.isOnLastPage(false);
+            }
+            let dataFromService;
+            try {
+                dataFromService = await CustomersServices.fetchCustomers(null, this.currentPageNumber());
+            } catch (error) {
+                //console.log(error);
+            }
+
+            if (dataFromService) {
+                const customerSrc = dataFromService.map((customer) => {
+                    //customer.id = `client-${customer.id}`;
+                    customer.id = ko.observable(customer.id);
+                    return customer;
+                });
+                this.customersData(customerSrc);
+            }
 
         };
         this.onEditButton = (e, context) => {
@@ -136,14 +228,15 @@ define([
             const detail = event.detail;
             const eventTime = this._getCurrentTime();
             this.searchTerm(detail.value);
+            console.log(this.searchTerm());
             this.searchItemContext(this._trimItemContext(detail.itemContext));
             this.previousSearchTerm(detail.previousValue);
             this.searchTimeStamp(eventTime);
             let dataFromService;
             try {
-                dataFromService = await CustomersServices.fetchCustomers(this.searchTerm());
+                dataFromService = await CustomersServices.fetchCustomers(this.searchTerm(), this.currentPageNumber());
             } catch (error) {
-                console.log(error);
+                //console.log(error);
             }
 
             if (dataFromService) {
@@ -177,6 +270,24 @@ define([
 
     }
 
+    CustomersListViewModel.prototype._showCustomers = function () {
+        const busyContext = Context.getPageContext().getBusyContext();
+        const resolveBusyState = busyContext.addBusyState({
+            description: "Fetching customers",
+        });
+        return new Promise(function (resolve, reject) {
+                window.setTimeout(function(){
+                resolve();
+                }, 4000);
+
+            }).then(()=> {
+            this._initCustomersData();
+            this.customersLoaded(false);
+            resolveBusyState();
+        });
+
+
+    };
 
 
     CustomersListViewModel.prototype._initLabels = function () {
@@ -201,6 +312,7 @@ define([
     CustomersListViewModel.prototype._initObservables = function () {
         this.customersData = ko.observableArray([]);
         this.searchedCustomersData = ko.observableArray([]);
+        this.employees = ko.observableArray();
         this.selectedItems = new ojknockout_keyset_1.ObservableKeySet();
         this.selectedSelectionRequired = ko.observable(false);
         this.firstSelectedItem = ko.observable();
@@ -218,9 +330,14 @@ define([
         this.previousSearchTerm = ko.observable();
         this.searchTimeStamp = ko.observable();
 
-        this.pageNumber = ko.observable(1);
-        this.isOnFirstPage = ko.observable(this.pageNumber() == 1);
-        this.isOnLastPage = ko.observable(this.pageNumber() == 20);
+        this.currentPageNumber = ko.observable(1);
+        this.pagesNumber = ko.observable();
+
+        this.isOnFirstPage = ko.observable(true);
+        this.isOnLastPage = ko.observable(false);
+
+        this.progressValue = ko.observable(0);
+        this.customersLoaded = ko.observable(true);
     };
 
     CustomersListViewModel.prototype._initVariables = function () {
@@ -240,9 +357,9 @@ define([
     CustomersListViewModel.prototype._initCustomersData = async function () {
         let dataFromService;
         try {
-            dataFromService = await CustomersServices.fetchCustomers();
+            dataFromService = await CustomersServices.fetchCustomers(null, this.currentPageNumber);
         } catch (error) {
-            console.log(error);
+            //  console.log(error);
         }
 
         if (dataFromService) {
@@ -252,6 +369,26 @@ define([
                 return customer;
             });
             this.customersData(customerSrc);
+        }
+        return this.customersData;
+    };
+    CustomersListViewModel.prototype._initCustomersSuggestions = async function () {
+        let dataFromService;
+        try {
+            dataFromService = await CustomersServices.fetchCustomers();
+        } catch (error) {
+            //  console.log(error);
+        }
+
+        if (dataFromService) {
+            const customerSrc = dataFromService.map((customer) => {
+                //customer.id = `client-${customer.id}`;
+                customer.id = ko.observable(customer.id);
+                return customer;
+            });
+            this.searchedCustomersData(customerSrc);
+            this.pagesNumber(this.searchedCustomersData().length/10);
+
         }
     };
 

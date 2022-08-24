@@ -3,10 +3,34 @@
 
 <div    class="oj-sm-padding-4x-bottom oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-sm-width-full">
 
+        <span>
+            <!-- 
+                <oj-button id="btn-show" on-oj-action="[[showEmployees]]">Show Employees</oj-button>
+            -->   
+
+
+
+
+            <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnFirstPage]]" chroming="callToAction" display="icons" on-oj-action="[[onPreviousButton]]">
+                <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
+                <span><oj-bind-text>Previous</oj-bind-text></oj-bind-text></span>
+            </oj-button>
+            
+            <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled chroming="danger" display="label" label="[[currentPageNumber]]">
+                <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
+            </oj-button>
+        
+            <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnLastPage]]" chroming="callToAction" display="icons" on-oj-action="[[onNextButton]]">
+                <span slot="startIcon" class="oj-ux-ico-chevron-right"></span>
+                <span><oj-bind-text>Next</oj-bind-text></oj-bind-text></span>
+            </oj-button>
+        </span>
+        
+
     <oj-input-search
     id="search1"
     class="oj-form-control-max-width-md oj-sm-justify-content-flex-start"
-    suggestions="[[customersDataProvider]]"
+    suggestions="[[searchedCustomersDataProvider]]"
     value="{{value}}"
     raw-value="{{rawValue}}"
     on-oj-value-action="[[handleValueAction]]"
@@ -18,11 +42,15 @@
 
     <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"   chroming="callToAction" on-oj-action="[[onAddButton]]">
         <span slot="startIcon" class="oj-ux-ico-contact-plus"></span>
-        <span><oj-bind-text>Create New Customer</oj-bind-text></oj-bind-text></span>
+        <span><oj-bind-text>Create New</oj-bind-text></oj-bind-text></span>
     </oj-button>
 
 </div>
+<oj-bind-if test="[[customersLoaded]]">
 
+    <oj-progress-bar class="oj-sm-margin-4x-bottom " id="progressBar" value="-1" hidden="[[customersLoaded]]"></oj-progress-bar>
+
+</oj-bind-if>
     <oj-list-view 
     id="listview"
     class="oj-listview-item-padding-off"
@@ -68,13 +96,16 @@
 
 
 <div    class="oj-sm-padding-4x-top oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-sm-width-full">
-
-
 <span>
     <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnFirstPage]]" chroming="callToAction" display="icons" on-oj-action="[[onPreviousButton]]">
         <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
         <span><oj-bind-text>Previous</oj-bind-text></oj-bind-text></span>
     </oj-button>
+    
+    <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled chroming="callToAction" display="label" label="[[currentPageNumber]]">
+        <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
+    </oj-button>
+
     <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnLastPage]]" chroming="callToAction" display="icons" on-oj-action="[[onNextButton]]">
         <span slot="startIcon" class="oj-ux-ico-chevron-right"></span>
         <span><oj-bind-text>Next</oj-bind-text></oj-bind-text></span>
@@ -121,8 +152,7 @@
     </span>
 </div>
 
-
-
+<span><oj-bind-text value="[[currentPageNumber]]"></oj-bind-text></span>
 
 
 

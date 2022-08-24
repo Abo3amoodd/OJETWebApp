@@ -11,18 +11,26 @@ define(['text!../../json/config.json'], function (configFile) {
      * @description Generates a unique ID
      * @returns a unique ID based on a internal counter
      */
-    buildEndPointUrl(endpointProperty, id, firstName, pageCount) {
+    buildEndPointUrl(endpointProperty, id, searchTerm, pageNumber) {
 
       const url = `${config.isSecure ? 'https' :'http'}://${config.host}:${config.port}/${config.endpoints[endpointProperty]}`;
 
-      if (firstName == null) {
+      if (searchTerm == null) {
         if (id == null) {
-          return url + `?_start=${pageCount}&_limit=10`;
-        } else {
+          if(pageNumber==null){
+            return url;
+          }
+          else {
+            return url + `?_page=${pageNumber}&_sort=firstName&_order=asc`;
+          }
+
+        } 
+        else {
           return url + `/${id}`;
         }
-      } else {
-        return url + `/?start=0&_limit=10&label_like=${firstName}`;
+      } 
+      else {
+        return url + `/?label_like=${searchTerm}&_limit=10&_sort=firstName&_order=asc`;
       }
 
 
@@ -35,7 +43,7 @@ define(['text!../../json/config.json'], function (configFile) {
      * @param {}bodyData
      * @returns (Promise<Any>)
      */
-    async fetchData(endpointProperty, method, bodyData) {
+    async fetchData(endpointProperty, method, bodyData,pageNumber) {
       let fetchOptionsObject = null;
       if (method === 'POST') {
         fetchOptionsObject = {
@@ -79,7 +87,7 @@ define(['text!../../json/config.json'], function (configFile) {
 
 
 
-          const api_url = this.buildEndPointUrl(endpointProperty);
+          const api_url = this.buildEndPointUrl(endpointProperty,null,null,pageNumber);
           let dataFromService;
           try {
             const response = await fetch(api_url, fetchOptionsObject);

@@ -265,7 +265,8 @@ define([
       this.inputStateValue(null);
       let statesArray;
       if (value === 'EGY') {
-        statesArray = [{
+        statesArray = [
+          {
             value: 'ALX',
             label: 'Alexandria',
           },
