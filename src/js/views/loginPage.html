@@ -1,0 +1,48 @@
+<!--
+Copyright (c) 2014, 2022, Oracle and/or its affiliates.
+Licensed under The Universal Permissive License (UPL), Version 1.0
+as shown at https://oss.oracle.com/licenses/upl/
+-->
+<div class="panel panel-default"> 
+<div class="panel-body d-flex flex-column justify-content-center"  style="  position:absolute;
+top: 0; bottom: 0; left: 0; right: 0;
+margin: auto;
+width: 50vw; height: 50vh;">
+    <div class="oj-sm-padding-3x-horizontal oj-sm-padding-3x-vertical d-flex flex-column justify-content-center shadow" style="border-radius: 25px;">
+    <form>
+            <div class="d-grid gap-4 col-6 mx-auto">
+            <figure class="text-center">
+                <h1  class="display-2">Login</h1>
+            </figure>
+                <oj-input-text id="inputUserName" value="{{inputUserNameValue}}" required="true" label-hint="[[inputUserNameLabel]]"></oj-input-text>
+                <oj-input-password id="inputUserPassword" 
+                    value="{{inputUserPasswordValue}}" 
+                    label-hint="[[inputUserPasswordLabel]]" 
+                    validators="[[inputUserPasswordValidator]]"
+                    mask-icon="visible"></oj-input-password>
+                <oj-button
+                    class="oj-button-lg oj-sm-padding-1x-horizontal oj-sm-padding-1x-vertical oj-sm-justify-content-center"
+                    chroming="callToAction"
+                    on-oj-action="[[onLoginButton]]"
+                    >
+                    <span>
+                        <oj-bind-text value="[[loginButtonLabel]]">
+                        </oj-bind-text>
+                    </span>
+                </oj-button>    
+            </div>
+        </form>
+        
+        <!--Messages-->
+        <oj-messages id="oj-messages-id" class="oj-color-invert"
+                    messages="[[messageDataProvider]]"
+                    display="notification"
+                    position="[[messagesPosition]]"></oj-messages>
+        <!--Messages end-->
+    </div>
+
+
+
+</div>
+
+</div>

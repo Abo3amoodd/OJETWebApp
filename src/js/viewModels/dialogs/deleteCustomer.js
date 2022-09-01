@@ -73,8 +73,8 @@
         };
 
         DeleteCustomerDialogViewModel.prototype._handleDeleteCustomer= async function(context) {
-            console.log("test");
-            console.log(this.deletedCustomerId);
+           // console.log("test");
+          //  console.log(this.deletedCustomerId);
             let dataFromService;
             try {
             dataFromService = await CustomersServices.deleteCustomer(this.deletedCustomerId);

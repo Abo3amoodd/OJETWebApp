@@ -11,14 +11,20 @@ define(['text!../../json/config.json'], function (configFile) {
      * @description Generates a unique ID
      * @returns a unique ID based on a internal counter
      */
-    buildEndPointUrl(endpointProperty, id, searchTerm, pageNumber) {
+    buildEndPointUrl(endpointProperty, id, searchTerm, pageNumber,userName,userPassword) {
 
       const url = `${config.isSecure ? 'https' :'http'}://${config.host}:${config.port}/${config.endpoints[endpointProperty]}`;
 
       if (searchTerm == null) {
         if (id == null) {
           if(pageNumber==null){
-            return url;
+            if(userName==null){
+                return url;       
+            }
+            else{
+              return url + `?userName=${userName}&password=${userPassword}`;
+            }
+            
           }
           else {
             return url + `?_page=${pageNumber}&_sort=firstName&_order=asc`;
@@ -32,18 +38,19 @@ define(['text!../../json/config.json'], function (configFile) {
       else {
         return url + `/?label_like=${searchTerm}&_limit=10&_sort=firstName&_order=asc`;
       }
-
-
     }
+
     /**
      * @function fetchData
      * @description executes API according to method used
      * @param {}endpointProperty
      * @param {}method
      * @param {}bodyData
+     * @param {}pageNumber
      * @returns (Promise<Any>)
      */
-    async fetchData(endpointProperty, method, bodyData,pageNumber) {
+
+    async fetchData(endpointProperty, method, bodyData,pageNumber,userName,userPassword) {
       let fetchOptionsObject = null;
       if (method === 'POST') {
         fetchOptionsObject = {
@@ -84,10 +91,7 @@ define(['text!../../json/config.json'], function (configFile) {
           return dataFromService;
 
         } else {
-
-
-
-          const api_url = this.buildEndPointUrl(endpointProperty,null,null,pageNumber);
+          const api_url = this.buildEndPointUrl(endpointProperty,null,null,pageNumber,null);
           let dataFromService;
           try {
             const response = await fetch(api_url, fetchOptionsObject);
@@ -110,7 +114,7 @@ define(['text!../../json/config.json'], function (configFile) {
           },
           method: 'DELETE'
         };
-        const api_url = this.buildEndPointUrl(endpointProperty, bodyData, null);
+        const api_url = this.buildEndPointUrl(endpointProperty, bodyData);
         let dataFromService;
         try {
           const response = await fetch(api_url, fetchOptionsObject);
@@ -122,8 +126,25 @@ define(['text!../../json/config.json'], function (configFile) {
 
         return dataFromService;
       }
+      if (method === 'CHECK') {
+        fetchOptionsObject = {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'GET'
+        };
+        const api_url = this.buildEndPointUrl(endpointProperty, null, null,null,userName,userPassword);
+        let dataFromService;
+        try {
+          const response = await fetch(api_url, fetchOptionsObject);
+          if (!response.ok) throw Error('Something went wrong');
+          dataFromService = await response.json();
+        } catch (error) {
+          throw Error('Something went wrong');
+        }
 
-
+        return dataFromService;
+      }
 
 
     }

@@ -13,6 +13,8 @@ inputs: {
     list:'My List',
     imageUrl:'Image Url',
     email:'Email Address',
+    userName:'User Name',
+    userPassword:'Password'
 },
 headers:{
     favoritesDialogTitle:'Add To List',
@@ -20,6 +22,7 @@ headers:{
 },
 validators: {
     firstNameLengthHint: 'Value must have at least {0} characters but not more than {1}',
+    userPasswordLengthHint: 'Password must have at least {0} characters but not more than {1}',
     tooManyChars: 'Too Many Characters',
     tooFewChars: 'Too Few Characters',
     tooLong: 'Number of characters is too high. Enter at most {0} characters.',
@@ -37,6 +40,7 @@ buttons: {
     saveToList:'Save',
     closeDialog:'Close',
     deleteCustomer:'Delete',
+    login:'Login',
 },
 // ... contents omitted
 },

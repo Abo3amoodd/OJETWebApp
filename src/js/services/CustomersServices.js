@@ -30,6 +30,9 @@ define(['utils/Service'], function (ServiceUtils) {
   CustomersServices.prototype.deleteCustomer = async function (customerID) {
     return await ServiceUtils.fetchData('customers', 'DELETE', customerID);
   };
+  CustomersServices.prototype.validateCustomer = async function (userName,userPassword) {
+    return await ServiceUtils.fetchData('customers', 'CHECK', null,null,userName,userPassword);
+  };
 
   return new CustomersServices;
 });

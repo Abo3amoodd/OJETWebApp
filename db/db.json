@@ -9,7 +9,9 @@
       "label": "Sari,Pochin",
       "company": "Fivebridge",
       "birthday": "1988-03-19",
-      "country": "VU"
+      "country": "VU",
+      "userName":"Sari.P",
+      "password":"SariP1234."
     },
     {
       "id": 3,
@@ -20,7 +22,9 @@
       "label": "Darwin,Tunnah",
       "company": "Tekfly",
       "birthday": "1986-08-20",
-      "country": "CN"
+      "country": "CN",
+      "userName":"DarwinTun",
+      "password":"Darwin123"
     },
     {
       "id": 4,

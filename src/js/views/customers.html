@@ -6,6 +6,7 @@ as shown at https://oss.oracle.com/licenses/upl/
 
 <oj-validation-group :id="[[formValidationGroupId]]"
                      valid="[[groupValid]]">
+                  
   <oj-form-layout id="formLayoutOptions" max-columns="3"
                   direction="row"
                   class="oj-formlayout-full-width"
@@ -88,14 +89,15 @@ disabled>
 <div
     class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
   <div class="oj-flex-item">
-    <oj-button on-oj-action="[[onCreateButtonClick]]"
-               chroming="callToAction"><span>
+    <oj-button  on-oj-action="[[onCreateButtonClick]]"
+                chroming="callToAction"><span>
         <oj-bind-text value="[[createButtonLabel]]">
         </oj-bind-text>
-      </span></oj-button>
+      </span>
+    </oj-button>
 
     <oj-button on-oj-action="[[onResetButtonClick]]"
-               chroming="danger"><span>
+              chroming="danger"><span>
         <oj-bind-text value="[[resetButtonLabel]]">
         </oj-bind-text>
       </span></oj-button>
@@ -104,7 +106,7 @@ disabled>
 
 <!--Messages-->
 <oj-messages id="oj-messages-id" class="oj-color-invert"
-             messages="[[messageDataProvider]]"
-             display="notification"
-             position="[[messagesPosition]]"></oj-messages>
+            messages="[[messageDataProvider]]"
+            display="notification"
+            position="[[messagesPosition]]"></oj-messages>
 <!--Messages end-->

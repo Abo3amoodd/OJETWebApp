@@ -58,31 +58,6 @@ define([
 
 
 
-/*         this.showEmployees = () => {
-           // const buttonElement = event.target;
-           // buttonElement.disabled = true;
-            this.employees([]);
-            const busyContext = Context.getPageContext().getBusyContext();
-            const resolveBusyState = busyContext.addBusyState({
-                description: "Fetching employees",
-            });
-            this.getEmployees().then( ()=> {
-                this._initCustomersData();
-            
-              //  buttonElement.disabled = false;
-                resolveBusyState();
-            });
-        };
-
-        this.getEmployees = () => {
-            return new Promise(function (resolve, reject) {
-                window.setTimeout(function(){
-                    resolve();
-                }
-                    //resolve();
-                , 1000);
-            });
-        }; */
 
 
 
@@ -278,6 +253,24 @@ define([
         return new Promise(function (resolve, reject) {
                 window.setTimeout(function(){
                 resolve();
+                }, 1000);
+
+            }).then(()=> {
+            this._initCustomersData();
+            this.customersLoaded(false);
+            resolveBusyState();
+        });
+
+
+    };
+        CustomersListViewModel.prototype._showCustomers = function () {
+        const busyContext = Context.getPageContext().getBusyContext();
+        const resolveBusyState = busyContext.addBusyState({
+            description: "Fetching customers",
+        });
+        return new Promise(function (resolve, reject) {
+                window.setTimeout(function(){
+                resolve();
                 }, 4000);
 
             }).then(()=> {
@@ -352,7 +345,9 @@ define([
 
 
     CustomersListViewModel.prototype._beforeDeleteCustomerDialogClose = function () {
+
         //  this.inputListValue(null);
+        
     };
     CustomersListViewModel.prototype._initCustomersData = async function () {
         let dataFromService;

@@ -8,12 +8,13 @@
 /*
  * Your application specific code will go here
  */
-define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknockouttemplateutils', 'ojs/ojcorerouter', 'ojs/ojmodulerouter-adapter', 'ojs/ojknockoutrouteradapter', 'ojs/ojurlparamadapter', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojarraydataprovider',
-    'ojs/ojdrawerpopup', 'ojs/ojmodule-element', 'ojs/ojknockout'
+define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknockouttemplateutils', 'ojs/ojcorerouter', 'ojs/ojmodulerouter-adapter', 'ojs/ojknockoutrouteradapter', 'ojs/ojurlparamadapter', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojarraydataprovider','ojs/ojtranslation','utils/Core',
+'services/CustomersServices','ojs/ojasyncvalidator-length',
+    'ojs/ojdrawerpopup',"ojs/ojprogress-circle", 'ojs/ojmodule-element', 'ojs/ojknockout',"ojs/ojinputtext", "ojs/ojlabel", "ojs/ojformlayout",'ojs/ojbutton','ojs/ojmessages',
   ],
-  function (ko, Context, moduleUtils, KnockoutTemplateUtils, CoreRouter, ModuleRouterAdapter, KnockoutRouterAdapter, UrlParamAdapter, ResponsiveUtils, ResponsiveKnockoutUtils, ArrayDataProvider) {
+  function (ko, Context, moduleUtils, KnockoutTemplateUtils, CoreRouter, ModuleRouterAdapter, KnockoutRouterAdapter, UrlParamAdapter, ResponsiveUtils, ResponsiveKnockoutUtils, ArrayDataProvider,Translations,CoreUtils,CustomersServices,AsyncLengthValidator) {
 
-    function ControllerViewModel() {
+    function ControllerViewModel(params) {
 
       this.KnockoutTemplateUtils = KnockoutTemplateUtils;
 
@@ -45,8 +46,6 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
             iconClass: 'oj-ux-ico-contact-group'
           }
         },
-
-
         {
           path: 'dashboard',
           detail: {
@@ -86,6 +85,25 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
 
       ];
 
+      let navData2 = [{
+        path: '',
+        redirect: 'dashboard'
+      },
+      {
+        path: 'dashboard',
+        detail: {
+          label: 'dashboard',
+        }
+      },
+
+
+    ];
+
+
+      // Setup the navDataProvider with the routes, excluding the first redirected
+      // route.
+
+      if(localStorage.getItem("userName")!=null){
       // Router setup
       let router = new CoreRouter(navData, {
         urlAdapter: new UrlParamAdapter()
@@ -95,12 +113,24 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
       this.moduleAdapter = new ModuleRouterAdapter(router);
 
       this.selection = new KnockoutRouterAdapter(router);
-
-      // Setup the navDataProvider with the routes, excluding the first redirected
-      // route.
-      this.navDataProvider = new ArrayDataProvider(navData.slice(2), {
+        this.navDataProvider = new ArrayDataProvider(navData.slice(2), {
+          keyAttributes: "path"
+        });
+      }
+      else{
+      // Router setup
+      let router = new CoreRouter(navData2, {
+        urlAdapter: new UrlParamAdapter()
+      });
+      router.sync();
+      this.moduleAdapter = new ModuleRouterAdapter(router);
+      this.selection = new KnockoutRouterAdapter(router);
+      this.navDataProvider = new ArrayDataProvider(navData2.slice(1), {
         keyAttributes: "path"
       });
+      }
+
+
 
       // Drawer
       self.sideDrawerOn = ko.observable(false);
@@ -119,8 +149,11 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
       // Application Name used in Branding Area
       this.appName = ko.observable("My First App");
       // User Info used in Global Navigation area
-      this.userLogin = ko.observable("test321@oracle.com");
+      this.userLogin =ko.observable(localStorage.getItem("userName"));
+      this.isLogged =ko.observable(localStorage.getItem("userName")!=null);
 
+     // this.isLogged = ko.observable(!!localStorage.getItem("userName"));      
+     // localStorage.clear();
       // Footer
       this.footerLinks = [{
           name: 'About Oracle',
@@ -148,9 +181,130 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
           linkTarget: "http://www.oracle.com/us/legal/privacy/index.html"
         },
       ];
+
+
+
+    this._initObservables();
+    this._initLabels();
+    this._initVariables();
+    this._initValidators();
+
+    //hide
+    $('#passwordsNoMatchRegister').hide();
+
+    this.onSignoutButton = (e) => {
+      localStorage.clear();
+      window.location.reload();
+    };
+
+    this.onLoginButton= async(e) =>{
+      const button = e.target;
+      button.disabled = true;
+      this.loading(true);
+      this._handleLogin(); 
+      }
+
     }
+
+
+    ControllerViewModel.prototype._initObservables = function(){
+      this.inputUserNameValue=ko.observable(null);
+      this.inputUserPasswordValue=ko.observable(null);
+      this.customersData = ko.observableArray([]);
+      this.messageDataProvider = ko.observable(new ArrayDataProvider([]));
+      this.loading=ko.observable(false);
+  };
+  ControllerViewModel.prototype._initVariables = function () {
+      this.customersDataProvider = new ArrayDataProvider(this.customersData, {
+          keyAttributes: "userName"
+      });
+      this.messagesPosition = CoreUtils.toastMessagePosition();
+  };
+
+  ControllerViewModel.prototype._initLabels=function () {
+      this.inputUserNameLabel=Translations.getTranslatedString('inputs.userName');
+      this.inputUserPasswordLabel=Translations.getTranslatedString('inputs.userPassword');
+      this.loginButtonLabel = Translations.getTranslatedString('buttons.login');
+
+
+  };
+
+  ControllerViewModel.prototype._initValidators=function(){
+      this.inputUserPasswordValidator = ko.observableArray([
+          new AsyncLengthValidator({
+          min: 6,
+          max: 15,
+          hint: {
+              inRange: Translations.getTranslatedString('validators.userPasswordLengthHint', '{min}', '{max}'),
+          },
+          messageSummary: {
+              tooLong: Translations.getTranslatedString('validators.tooManyChars'),
+              tooShort: Translations.getTranslatedString('validators.tooFewChars'),
+          },
+          messageDetail: {
+              tooLong: Translations.getTranslatedString('validators.tooLong', '{max}'),
+              tooShort: Translations.getTranslatedString('validators.tooShort', '{min}'),
+          },
+          }),
+      ]);
+  };
+
+  ControllerViewModel.prototype._handleLogin = async function (context) {
+    let dataFromService;
+    try {
+    dataFromService = await CustomersServices.validateCustomer(this.inputUserNameValue(),this.inputUserPasswordValue());
+    //  console.log(dataFromService);
+    } catch (error) {
+    this.messageDataProvider(
+    new ArrayDataProvider([{
+        severity: 'error',
+        detail: error.message,
+        timestamp: new Date().toISOString(),
+        autoTimeout: CoreUtils.getAutoTimeout(),
+        }, ])
+    );
+    }
+    if (dataFromService.length>0) {
+        const customerSrc = dataFromService.map((customer) => {
+            customer.userName = ko.observable(customer.userName);
+            return customer;
+        });
+        this.customersData(customerSrc);
+        this.userLogin(customerSrc[0].label);
+        this.messageDataProvider(
+          new ArrayDataProvider([{
+              severity: 'success',
+              detail: 'Login Successful!',
+              timestamp: new Date().toISOString(),
+              autoTimeout: CoreUtils.getAutoTimeout(),
+              }, ])
+          );
+        localStorage.setItem("userName", customerSrc[0].label);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+    }
+    else{
+        //$('#passwordsNoMatchRegister').show();
+        this.messageDataProvider(
+            new ArrayDataProvider([{
+                severity: 'error',
+                detail: 'Wrong Username or Password',
+                timestamp: new Date().toISOString(),
+                autoTimeout: CoreUtils.getAutoTimeout(),
+                }, ])
+            );
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+    }       
+    
+  };
+
+
+
     // release the application bootstrap busy state
-    Context.getPageContext().getBusyContext().applicationBootstrapComplete();
+  Context.getPageContext().getBusyContext().applicationBootstrapComplete();
 
     return new ControllerViewModel();
   }

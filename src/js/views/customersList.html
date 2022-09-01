@@ -1,56 +1,51 @@
+<div class="d-flex gap-2 align-items-center">
 
-
-
-<div    class="oj-sm-padding-4x-bottom oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-sm-width-full">
-
-        <span>
-            <!-- 
-                <oj-button id="btn-show" on-oj-action="[[showEmployees]]">Show Employees</oj-button>
-            -->   
-
-
-
-
-            <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnFirstPage]]" chroming="callToAction" display="icons" on-oj-action="[[onPreviousButton]]">
-                <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
-                <span><oj-bind-text>Previous</oj-bind-text></oj-bind-text></span>
-            </oj-button>
-            
-            <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled chroming="danger" display="label" label="[[currentPageNumber]]">
-                <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
-            </oj-button>
+    <!--NAV TOP-->
+    <div class="d-flex justify-content-start align-items-center d-none d-md-block">
+        <oj-button class="oj-button-md"  disabled="[[isOnFirstPage]]" chroming="callToAction" display="icons" on-oj-action="[[onPreviousButton]]">
+            <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
+            <span><oj-bind-text>Previous</oj-bind-text></oj-bind-text></span>
+        </oj-button>
         
-            <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnLastPage]]" chroming="callToAction" display="icons" on-oj-action="[[onNextButton]]">
-                <span slot="startIcon" class="oj-ux-ico-chevron-right"></span>
-                <span><oj-bind-text>Next</oj-bind-text></oj-bind-text></span>
-            </oj-button>
-        </span>
-        
+        <oj-button class="oj-button-md"  disabled chroming="danger" display="label" label="[[currentPageNumber]]">
+            <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
+        </oj-button>
 
-    <oj-input-search
-    id="search1"
-    class="oj-form-control-max-width-md oj-sm-justify-content-flex-start"
-    suggestions="[[searchedCustomersDataProvider]]"
-    value="{{value}}"
-    raw-value="{{rawValue}}"
-    on-oj-value-action="[[handleValueAction]]"
-    placeholder="Search..."
-    aria-label="My search field">
-    </oj-input-search>
-    
-
-
-    <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"   chroming="callToAction" on-oj-action="[[onAddButton]]">
-        <span slot="startIcon" class="oj-ux-ico-contact-plus"></span>
-        <span><oj-bind-text>Create New</oj-bind-text></oj-bind-text></span>
-    </oj-button>
-
+        <oj-button class="oj-button-md"  disabled="[[isOnLastPage]]" chroming="callToAction" display="icons" on-oj-action="[[onNextButton]]">
+            <span slot="startIcon" class="oj-ux-ico-chevron-right"></span>
+            <span><oj-bind-text>Next</oj-bind-text></oj-bind-text></span>
+        </oj-button>
+        <!--NAV TOP END-->
+    </div>
+    <!--SEARCH & CREATE-->
+    <div class="d-flex gap-2 col align-items-center">
+        <oj-input-search
+        id="search1"
+        class="oj-sm-padding-1x-vertical flex-grow-1"
+        suggestions="[[searchedCustomersDataProvider]]"
+        value="{{value}}"
+        raw-value="{{rawValue}}"
+        on-oj-value-action="[[handleValueAction]]"
+        placeholder="Search..."
+        aria-label="My search field">
+        </oj-input-search>
+        <oj-button class="oj-button"   chroming="callToAction" on-oj-action="[[onAddButton]]">
+            <span slot="startIcon" class="oj-ux-ico-contact-plus"></span>
+            <span><oj-bind-text>Create New</oj-bind-text></oj-bind-text></span>
+        </oj-button>
+    </div>
+    <!--SEARCH & CREATE END-->
 </div>
-<oj-bind-if test="[[customersLoaded]]">
 
-    <oj-progress-bar class="oj-sm-margin-4x-bottom " id="progressBar" value="-1" hidden="[[customersLoaded]]"></oj-progress-bar>
+<!--PROGRESS BAR-->
+    <oj-bind-if test="[[customersLoaded]]">
+        <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+        </div>
+    </oj-bind-if>
+<!--PROGRESS BAR END-->
 
-</oj-bind-if>
+<!--CUSTOMERS LIST-->
     <oj-list-view 
     id="listview"
     class="oj-listview-item-padding-off"
@@ -65,53 +60,60 @@
     gridlines.item="visible">
         <template slot="itemTemplate" data-oj-as="item">
             <oj-list-item-layout>
-                <span class="oj-typography-body-md oj-text-color-primary oj-typography-bold">
-                    <oj-bind-text value="[[item.data.firstName]]"></oj-bind-text>
-                    <oj-bind-text value="[[item.data.lastName]]"></oj-bind-text>
-                </span>
 
-                <oj-avatar slot="leading" size="xs" src="[[item.data.avatar]]"></oj-avatar>
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
 
-                <span slot="secondary" class="oj-typography-body-sm oj-text-color-secondary">
-                    <oj-bind-text value="[[item.data.email]]"></oj-bind-text>
-                </span>
-                <span>
-                <div    class="oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-divider  oj-sm-width-full">
-                    <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal "  chroming="solid" on-oj-action="[[onEditButton]]">
-                        <span slot="startIcon"  class="oj-ux-ico-contact-edit"></span>
-                        <span><oj-bind-text>Edit</oj-bind-text></oj-bind-text></span>
-                    </oj-button>
-                    <oj-button class="oj-button-sm oj-sm-padding-2x-horizontal"  chroming="danger" display="icons" on-oj-action="[[onDeleteButton]]">
-                        <span slot="startIcon"  class="oj-ux-ico-delete-all"></span>
-                        <span><oj-bind-text>Delete Customer</oj-bind-text></oj-bind-text></span>
-                    </oj-button>
+                    <div class= "d-flex gap-2 align-items-center">
+
+                        <div>
+                            <oj-avatar  size="xs" src="[[item.data.avatar]]"></oj-avatar>
+                        </div>
+
+                        <div>
+                            <span class="oj-typography-body-md oj-text-color-primary oj-typography-bold">
+                                <oj-bind-text value="[[item.data.firstName]]"></oj-bind-text>
+                                <oj-bind-text value="[[item.data.lastName]]"></oj-bind-text>
+                            </span>
+                            <span class="oj-typography-body-sm oj-text-color-secondary">
+                                <oj-bind-text value="[[item.data.email]]"></oj-bind-text>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-divider gap-2 oj-sm-width-full">
+                        <button type="create" on-click="[[onEditButton]]" class="btn btn-dark"><i class="fa-regular fa-pen-to-square"></i><span> Edit</span></button>
+                        <button type="delete" on-click="[[onDeleteButton]]" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+
                 </div>
 
 
-                </span>
-
             </oj-list-item-layout>
         </template>
-</oj-list-view>
+    </oj-list-view>
+<!--CUSTOMERS LIST END-->
 
-
-<div    class="oj-sm-padding-4x-top oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-sm-width-full">
+<!--PAGE NAV BOTTOM-->
+<div    class="oj-sm-padding-4x-top oj-flex-item oj-flex oj-sm-justify-content-center oj-sm-width-full">
 <span>
-    <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnFirstPage]]" chroming="callToAction" display="icons" on-oj-action="[[onPreviousButton]]">
+    <oj-button class="oj-button oj-sm-padding-1x-horizontal"  disabled="[[isOnFirstPage]]" chroming="callToAction" display="icons" on-oj-action="[[onPreviousButton]]">
         <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
-        <span><oj-bind-text>Previous</oj-bind-text></oj-bind-text></span>
+        <span><oj-bind-text>Previous</oj-bind-text></span>
     </oj-button>
     
-    <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled chroming="callToAction" display="label" label="[[currentPageNumber]]">
+    <oj-button class="oj-button oj-sm-padding-1x-horizontal"  disabled chroming="callToAction" display="label" label="[[currentPageNumber]]">
         <span slot="startIcon" class="oj-ux-ico-chevron-left"></span>
     </oj-button>
 
-    <oj-button class="oj-button-md oj-sm-padding-1x-horizontal"  disabled="[[isOnLastPage]]" chroming="callToAction" display="icons" on-oj-action="[[onNextButton]]">
+    <oj-button class="oj-button oj-sm-padding-1x-horizontal"  disabled="[[isOnLastPage]]" chroming="callToAction" display="icons" on-oj-action="[[onNextButton]]">
         <span slot="startIcon" class="oj-ux-ico-chevron-right"></span>
-        <span><oj-bind-text>Next</oj-bind-text></oj-bind-text></span>
+        <span><oj-bind-text>Next</oj-bind-text></span>
     </oj-button>
 </span>
 </div>
+<!--PAGE NAV BOTTOM END-->
 
 <!--DIALOG-->
 <oj-dialog  :id="[[deleteCustomerDialogId]]" 
@@ -131,7 +133,7 @@
 </oj-dialog>
 <!--DIALOG END-->
 
-
+<!--DATA INFO-->
 <div class="oj-typography-body-sm oj-text-color-secondary">
     <br />
     <label for="curr-selection">Current Selection:</label>
@@ -150,10 +152,9 @@
     <span id="first-selected-item-id-value">
     <oj-bind-text value="[[ko.toJSON(firstSelectedItem)]]"></oj-bind-text>
     </span>
+    <br />
+    <span><oj-bind-text value="[[currentPageNumber]]"></oj-bind-text></span>
 </div>
-
-<span><oj-bind-text value="[[currentPageNumber]]"></oj-bind-text></span>
-
-
+<!--DATA INFO END-->
 
 
